@@ -1,0 +1,25 @@
+# Node.js .gitignore template
+
+# Logs
+logs
+*.log
+
+# Node.js build and dependencies
+node_modules/
+npm-debug.log
+
+# IDE and editor files
+.vscode/
+.idea/
+.editorconfig
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Other
+.env
+coverage/
+
+# Build
+dist

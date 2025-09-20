@@ -3,6 +3,8 @@
     "target": "ESNext",
     "module": "nodenext",
     "moduleResolution": "NodeNext",
+    "declaration": true,
+    "emitDeclarationOnly": false,
     "outDir": "dist",
     "rootDir": "src",
 

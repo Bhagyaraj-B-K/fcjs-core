@@ -8,7 +8,6 @@
     "lint": "eslint . --ext .ts",
     "format": "prettier --write ."
   },
-  "private": true,
   "files": [
     "dist"
   ],

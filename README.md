@@ -20,7 +20,6 @@ npm install @fcjs/core
 
 ## Usage
 
-
 ### 1. Define DTOs with zod-openapi/extend
 
 To enable OpenAPI documentation for your Zod schemas, import `zod-openapi/extend` before defining your DTOs. This allows you to use the `.openapi()` method to add metadata like descriptions and examples, which will be included in the generated OpenAPI docs.
@@ -29,21 +28,25 @@ To enable OpenAPI documentation for your Zod schemas, import `zod-openapi/extend
 import 'zod-openapi/extend';
 import { z } from 'zod';
 
-export const UserDto = z.object({
-	id: z.number(),
-	name: z.string(),
-}).openapi({
-	description: 'User Data',
-	example: { id: 1, name: 'John Doe' },
-});
+export const UserDto = z
+  .object({
+    id: z.number(),
+    name: z.string(),
+  })
+  .openapi({
+    description: 'User Data',
+    example: { id: 1, name: 'John Doe' },
+  });
 
-export const CreateUserDto = z.object({
-	name: z.string().min(1),
-	email: z.string().email(),
-}).openapi({
-	description: 'Create user body',
-	example: { name: 'eg_user', email: 'user@example.com' },
-});
+export const CreateUserDto = z
+  .object({
+    name: z.string().min(1),
+    email: z.string().email(),
+  })
+  .openapi({
+    description: 'Create user body',
+    example: { name: 'eg_user', email: 'user@example.com' },
+  });
 ```
 
 ### 2. Use DTOs in Controllers
@@ -54,22 +57,23 @@ import { UserDto, CreateUserDto } from './dtos';
 
 @Route('/users')
 class UserController {
-	@Get('/')
-	@ResponseDto(UserDto)
-	async getUser(req, res) {
-		// ...fetch user logic
-		return { id: 1, name: 'John Doe' };
-	}
+  @Get('/')
+  @ResponseDto(UserDto)
+  async getUser(req, res) {
+    // ...fetch user logic
+    return { id: 1, name: 'John Doe' };
+  }
 
-	@Post('/')
-	@BodyDto(CreateUserDto)
-	@ResponseDto(UserDto)
-	async createUser(req, res) {
-		// ...create user logic
-		return { id: 2, name: req.body.name };
-	}
+  @Post('/')
+  @BodyDto(CreateUserDto)
+  @ResponseDto(UserDto)
+  async createUser(req, res) {
+    // ...create user logic
+    return { id: 2, name: req.body.name };
+  }
 }
 ```
+
 ### 3. Middleware Example
 
 You can use custom middleware classes with the `@Middleware` decorator to protect routes or add custom logic. Middleware classes should have a `handler` method that receives Express's `req`, `res`, and `next` arguments.
@@ -81,31 +85,31 @@ import { UnauthorizedError } from '../utils/exceptions.util';
 import { getUserDto } from './dtos';
 
 export class authMiddleware {
-	public headerKey = 'Authorization';
-	public description = 'Bearer <token>';
+  public headerKey = 'Authorization';
+  public description = 'Bearer <token>';
 
-	public handler(req: Request, res: Response, next: NextFunction) {
-		const authHeader = req.headers['authorization'];
-		if (!authHeader || !authHeader.startsWith('Bearer ')) {
-			throw new UnauthorizedError('Missing or invalid Authorization header');
-		}
-		const token = authHeader.split(' ')[1];
-		if (token !== 'success') {
-			throw new UnauthorizedError('Invalid token');
-		}
-		next();
-	}
+  public handler(req: Request, res: Response, next: NextFunction) {
+    const authHeader = req.headers['authorization'];
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      throw new UnauthorizedError('Missing or invalid Authorization header');
+    }
+    const token = authHeader.split(' ')[1];
+    if (token !== 'success') {
+      throw new UnauthorizedError('Invalid token');
+    }
+    next();
+  }
 }
 
 // in user.controller.ts
 class UserController {
-	@Get('/:id')
-	@Middleware(authMiddleware)
-	@ResponseDto(getUserDto)
-	public async getUserById(req: Request) {
-		// ...fetch user by id logic
-		return { id: +req.params.id, name: 'John Doe' };
-	}
+  @Get('/:id')
+  @Middleware(authMiddleware)
+  @ResponseDto(getUserDto)
+  public async getUserById(req: Request) {
+    // ...fetch user by id logic
+    return { id: +req.params.id, name: 'John Doe' };
+  }
 }
 ```
 
@@ -125,7 +129,7 @@ app.listen(3000, () => {
   // using Logger from FCJs
   Logger.log(
     'Server',
-     `FCJs Server url: ${Logger.colorLog(`http://localhost:3000`, 'cyan')}`,
+    `FCJs Server url: ${Logger.colorLog(`http://localhost:3000`, 'cyan')}`,
   );
 });
 ```
@@ -163,17 +167,17 @@ server.listen(3001);
 
 ## API Reference
 
-- [`src/decorators/route.decorator.ts`](src/decorators/route.decorator.ts ): [`Route`](src/decorators/route.decorator.ts ), [`Get`](src/decorators/route.decorator.ts ), [`Post`](src/decorators/route.decorator.ts ), [`loadRoutes`](src/decorators/route.decorator.ts )
-- [`src/decorators/body-dto.decorator.ts`](src/decorators/body-dto.decorator.ts ): [`BodyDto`](src/decorators/body-dto.decorator.ts )
-- [`src/decorators/query-dto.decorator.ts`](src/decorators/query-dto.decorator.ts ): [`QueryDto`](src/decorators/query-dto.decorator.ts )
-- [`src/decorators/response-dto.decorator.ts`](src/decorators/response-dto.decorator.ts ): [`ResponseDto`](src/decorators/response-dto.decorator.ts )
-- [`src/decorators/middleware.decorator.ts`](src/decorators/middleware.decorator.ts ): [`Middleware`](src/decorators/middleware.decorator.ts )
-- [`src/decorators/websocket.decorator.ts`](src/decorators/websocket.decorator.ts ): [`WsRoute`](src/decorators/websocket.decorator.ts ), [`WsMessage`](src/decorators/websocket.decorator.ts ), [`loadWsRoutes`](src/decorators/websocket.decorator.ts )
-- [`src/utils/logger.util.ts`](src/utils/logger.util.ts ): [`Logger`](src/utils/logger.util.ts )
-- [`src/utils/exceptions.util.ts`](src/utils/exceptions.util.ts ): [`HttpException`](src/utils/exceptions.util.ts ), [`BadRequestError`](src/utils/exceptions.util.ts ), [`NotFoundError`](src/utils/exceptions.util.ts ), etc.
-- [`src/utils/openapi.util.ts`](src/utils/openapi.util.ts ): [`OpenApiDoc`](src/utils/openapi.util.ts )
-- [`src/utils/typecast.util.ts`](src/utils/typecast.util.ts ): [`Typecast`](src/utils/typecast.util.ts ), [`typecast`](src/utils/typecast.util.ts )
-- [`src/utils/autobind.util.ts`](src/utils/autobind.util.ts ): [`AutoBind`](src/utils/autobind.util.ts )
+- [`src/decorators/route.decorator.ts`](src/decorators/route.decorator.ts): [`Route`](src/decorators/route.decorator.ts), [`Get`](src/decorators/route.decorator.ts), [`Post`](src/decorators/route.decorator.ts), [`loadRoutes`](src/decorators/route.decorator.ts)
+- [`src/decorators/body-dto.decorator.ts`](src/decorators/body-dto.decorator.ts): [`BodyDto`](src/decorators/body-dto.decorator.ts)
+- [`src/decorators/query-dto.decorator.ts`](src/decorators/query-dto.decorator.ts): [`QueryDto`](src/decorators/query-dto.decorator.ts)
+- [`src/decorators/response-dto.decorator.ts`](src/decorators/response-dto.decorator.ts): [`ResponseDto`](src/decorators/response-dto.decorator.ts)
+- [`src/decorators/middleware.decorator.ts`](src/decorators/middleware.decorator.ts): [`Middleware`](src/decorators/middleware.decorator.ts)
+- [`src/decorators/websocket.decorator.ts`](src/decorators/websocket.decorator.ts): [`WsRoute`](src/decorators/websocket.decorator.ts), [`WsMessage`](src/decorators/websocket.decorator.ts), [`loadWsRoutes`](src/decorators/websocket.decorator.ts)
+- [`src/utils/logger.util.ts`](src/utils/logger.util.ts): [`Logger`](src/utils/logger.util.ts)
+- [`src/utils/exceptions.util.ts`](src/utils/exceptions.util.ts): [`HttpException`](src/utils/exceptions.util.ts), [`BadRequestError`](src/utils/exceptions.util.ts), [`NotFoundError`](src/utils/exceptions.util.ts), etc.
+- [`src/utils/openapi.util.ts`](src/utils/openapi.util.ts): [`OpenApiDoc`](src/utils/openapi.util.ts)
+- [`src/utils/typecast.util.ts`](src/utils/typecast.util.ts): [`Typecast`](src/utils/typecast.util.ts), [`typecast`](src/utils/typecast.util.ts)
+- [`src/utils/autobind.util.ts`](src/utils/autobind.util.ts): [`AutoBind`](src/utils/autobind.util.ts)
 
 ## License
 

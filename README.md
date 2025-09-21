@@ -1,6 +1,10 @@
 # @fcjs/core
 
-Core decorators and utilities for the First-Class JS (FCJs) framework. This package provides a set of TypeScript decorators and utility classes to rapidly build type-safe REST and WebSocket APIs using Express and Zod.
+<p align="center">
+  <img src="FCJs-logo.png" alt="FCJs Logo" width="100%" />
+</p>
+
+### Core decorators and utilities for the First-Class Js (FCJs) framework. This package provides a set of TypeScript decorators and utility classes to rapidly build type-safe REST and WebSocket APIs using Express and Zod.
 
 ## Features
 
@@ -49,7 +53,7 @@ export const CreateUserDto = z
   });
 ```
 
-### 2. Use DTOs in Controllers
+### 2. Use the Decorators and DTOs in Controllers
 
 ```ts
 import { Route, Get, Post, BodyDto, ResponseDto } from '@fcjs/core';

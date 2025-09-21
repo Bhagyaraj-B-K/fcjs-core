@@ -1,6 +1,13 @@
 {
   "name": "@fcjs/core",
   "version": "1.0.0-beta.1",
+  "license": "MIT",
+  "description": "Core decorators and utilities for the FCJs framework",
+  "homepage": "https://github.com/Bhagyaraj-B-K/fcjs-core#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bhagyaraj-B-K/fcjs-core.git"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -11,13 +18,6 @@
   "files": [
     "dist"
   ],
-  "license": "MIT",
-  "description": "Core decorators and utils for FCJs framework",
-  "homepage": "https://github.com/Bhagyaraj-B-K/fcjs-core#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Bhagyaraj-B-K/fcjs-core.git"
-  },
   "dependencies": {
     "express": "^5.1.0",
     "reflect-metadata": "^0.2.2",

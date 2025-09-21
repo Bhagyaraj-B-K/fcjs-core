@@ -1,6 +1,6 @@
 {
   "name": "@fcjs/core",
-  "version": "1.0.0-beta.1",
+  "version": "1.1.0",
   "license": "MIT",
   "description": "Core decorators and utilities for the FCJs framework",
   "homepage": "https://github.com/Bhagyaraj-B-K/fcjs-core#readme",

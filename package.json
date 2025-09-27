@@ -1,6 +1,10 @@
 {
   "name": "@fcjs/core",
-  "version": "1.1.0",
+  "version": "1.1.1",
+  "author": {
+    "name": "Bhagyaraj BK",
+    "url": "https://bhagyarajbk.netlify.app"
+  },
   "license": "MIT",
   "description": "Core decorators and utilities for the FCJs framework",
   "homepage": "https://github.com/Bhagyaraj-B-K/fcjs-core#readme",
@@ -8,6 +12,18 @@
     "type": "git",
     "url": "https://github.com/Bhagyaraj-B-K/fcjs-core.git"
   },
+  "keywords": [
+    "fcjs",
+    "first-class-js",
+    "firstclassjs",
+    "framework",
+    "decorators",
+    "typescript",
+    "express",
+    "websockets",
+    "zod",
+    "openapi"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

@@ -1,6 +1,7 @@
-import { ZodError, ZodSchema } from 'zod';
+import { ZodSchema } from 'zod';
 import { InternalServerError } from '../utils/exceptions.util.js';
 import { Request, Response } from 'express';
+import { ZodUtil } from '../utils/zod.util.js';
 
 export const openapiResponseMetadataKey = Symbol('openapi:responseBody');
 
@@ -23,8 +24,8 @@ export function ResponseDto(schema: ZodSchema) {
 
         return validated;
       } catch (err) {
-        if (err instanceof ZodError) {
-          throw new InternalServerError('Invalid Response body', err.errors);
+        if (ZodUtil.isZodError(err)) {
+          throw new InternalServerError('Invalid Response body', err.issues);
         }
 
         throw err;

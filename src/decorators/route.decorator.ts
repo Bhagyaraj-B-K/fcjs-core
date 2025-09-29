@@ -130,6 +130,8 @@ export function loadRoutes(app: Application, controllers: any[]) {
                 res.status(status);
                 if (res.statusCode !== 204) {
                   res.json({ success: true, data: result });
+                } else {
+                  res.end();
                 }
               }
             } catch (err) {
